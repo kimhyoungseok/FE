@@ -48,24 +48,24 @@ const MySalesPage = () => {
       ]
   };
 
-  const existingProductIndex = savedProducts.findIndex(p => 
-    p.product_name === newData.product_name &&
-    p.category_name === newData.category_name &&
-    p.product_price === newData.product_price &&
-    p.product_image === newData.product_image
-);
+    const existingProductIndex = savedProducts.findIndex(p => 
+        p.product_name === newData.product_name &&
+        p.category_name === newData.category_name &&
+        p.product_price === newData.product_price &&
+        p.product_image === newData.product_image
+    );
 
-if (existingProductIndex > -1) {
-    // 상품의 기본 정보가 동일한 경우
-    const updatedProducts = [...savedProducts];
-    updatedProducts[existingProductIndex].stock_option.push(...newData.stock_option);
-    setSavedProducts(updatedProducts);
-} else {
-    // 새로운 상품 정보인 경우
-    setSavedProducts(prev => [...prev, newData]);
-}
+    if (existingProductIndex > -1) {
+        // 상품의 기본 정보가 동일한 경우
+        const updatedProducts = [...savedProducts];
+        updatedProducts[existingProductIndex].stock_option.push(...newData.stock_option);
+        setSavedProducts(updatedProducts);
+    } else {
+        // 새로운 상품 정보인 경우
+        setSavedProducts(prev => [...prev, newData]);
+    }
 
-setProduct(initialState);
+    setProduct(initialState);
 };
 
   const handleCancel = (event) => {
@@ -115,14 +115,13 @@ const MySalesPageSection = styled.div`
   max-width: 1920px;
   max-height: 1000px;
   padding: 20px;
-  border: 1px solid red;
-  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 `;
 
 const PageContainer = styled.div`
   display: flex;
-  border: 1px solid black;
+  border-radius: 10px;
   padding: 10px;
-  width: 100%;
-  height: 100%;
+  max-width: 1920px;
+  max-height: 1000px;
 `;

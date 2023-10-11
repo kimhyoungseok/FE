@@ -14,7 +14,14 @@ export default PageSectionTitle
 
 const SectionTitle = styled.div`
   width: 100%;
+  padding-bottom: 5px;
   margin-bottom: 10px;
-  border: 1px solid red;
-  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #8e8e8e;
+  color: #8e8e8e;
+
+  h2 span {
+    
+    font-size: 14px;
+  }
+  
 `;

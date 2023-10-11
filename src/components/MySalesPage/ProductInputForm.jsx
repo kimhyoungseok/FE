@@ -62,16 +62,6 @@ const ProductInputForm = ({
       </InputTitle>
 
       <InputTitle>
-        <h2>상품가격</h2>
-        <Input
-          name="product_price"
-          value={product.product_price}
-          onChange={handleChange}
-          placeholder="가격"
-        />
-      </InputTitle>
-
-      <InputTitle>
       <h2>카테고리</h2>
                 <select 
                     name="category_name" 
@@ -85,6 +75,16 @@ const ProductInputForm = ({
                         </option>
                     ))}
                     </select>
+      </InputTitle>
+
+      <InputTitle>
+        <h2>상품가격</h2>
+        <Input
+          name="product_price"
+          value={product.product_price}
+          onChange={handleChange}
+          placeholder="가격"
+        />
       </InputTitle>
 
       <InputTitle>
@@ -131,7 +131,6 @@ export default ProductInputForm;
 const InputForm = styled.form`
   width: 25%;
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -142,24 +141,36 @@ const InputTitle = styled.div`
   display: flex;
   flex-direction: column;
   width: 92%;
-  border: 1px solid black;
+  border: 1px solid #d9d9d9;
   color: black;
   cursor: pointer;
   border-radius: 4px;
   padding: 10px;
+
+
+  h2{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 3px;
+  }
+
+  h2 select{
+    margin-top: 5px;
+  }
 `;
 
 const Input = styled.input`
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  
 `;
 
 const Button = styled.button`
   padding: 10px 15px;
   border: 1px solid black;
-  background-color: #007bff;
+  background-color: #000000;
   color: white;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 10px;
 `;

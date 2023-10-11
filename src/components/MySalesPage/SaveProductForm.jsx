@@ -32,8 +32,10 @@ const SaveProductForm = ({ products }) => {
   export default SaveProductForm;
 
 const DisplayDiv = styled.div`
-    border: 1px solid green; 
     margin-bottom: 5;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px;
 `;
 
 
@@ -41,8 +43,8 @@ const SaveProductContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 10px;
-    border: 1px solid blue;
     width: 50%;
+    
 
     
 `;
@@ -51,7 +53,7 @@ const Button = styled.button`
     width: 100%;
     padding: 10px 15px;
     border: 1px solid black;
-    background-color: #007BFF;
+    background-color: #000000;
     color: white;
     cursor: pointer;
     border-radius: 4px;

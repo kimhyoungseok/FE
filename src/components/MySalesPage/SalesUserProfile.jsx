@@ -16,13 +16,13 @@ const UserProfileContainer = styled.div`
     display: flex;
     align-items: center;
     max-width: 1920px;
-    max-height: 1000px;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
-    padding: 20px;
-    border: 1px solid red;
+    padding: 10px;
     border-radius: 7px;
-    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    color: #8e8e8e;
 `;
 
 const ProfileImage = styled.img`
@@ -35,7 +35,7 @@ const ProfileImage = styled.img`
 const UserInfo = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 `;
 
 export default SalesUserProfile;
