@@ -8,10 +8,14 @@ import SignUpPage from '../pages/signup/SignUpPage';
 import MyPage from '../pages/my';
 import SettingPage from '../pages/my/sub/SettingPage';
 import UserInfoPage from '../pages/my/sub/UserInfoPage';
-import MySalesPage from '../pages/my/sub/MySalesPage';
 import SubPage from '../pages/home/SubPage';
 import PurchaseListPage from '../pages/my/sub/PurchaseListPage';
 import OrderPage from '../pages/order/OrderPage';
+import SellerPage from '../pages/sales/SellerPage';
+import SellermodePage from '../pages/sales/seller/SellermodePage';
+import MySalesPage from '../pages/sales/seller/MySalesPage';
+import SalesProductInquiryPage from '../pages/sales/seller/SalesProductInquiry';
+import EditSalesItem from '../pages/sales/seller/EditSalesItem';
 
 const Routers = createBrowserRouter([
   {
@@ -51,12 +55,30 @@ const Routers = createBrowserRouter([
             element: <SettingPage />,
           },
           {
+            path: 'purchase',
+            element: <PurchaseListPage />,
+          },
+        ],
+      },
+      {
+        path: 'seller',
+        element: <SellerPage />,
+        children: [
+          {
+            index: true,
+            element: <SellermodePage />,
+          },
+          {
             path: 'sales',
             element: <MySalesPage />,
           },
           {
-            path: 'purchase',
-            element: <PurchaseListPage />,
+            path: 'spi',
+            element: <SalesProductInquiryPage />,
+          },
+          {
+            path: 'esi',
+            element: <EditSalesItem />,
           },
         ],
       },
