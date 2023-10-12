@@ -4,11 +4,12 @@ import styled from 'styled-components';
 const FormAddressDetail = ({ formData, handleInputChange }) => {
   return (
     <ContainerWrapper>
-      <label htmlFor="address">상세 주소</label>
+      <label htmlFor="address"></label>
       <input
         type="text"
         id="addressDetail"
         name="addressDetail"
+        placeholder="상세주소"
         value={formData.addressDetail}
         onChange={handleInputChange}
       />
