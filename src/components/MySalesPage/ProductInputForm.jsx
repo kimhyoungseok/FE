@@ -7,23 +7,9 @@ const ProductInputForm = ({
   handleChange,
   handleSubmit,
   handleCancel,
+  imagePreviewUrl,
 }) => {
-  const dummyCategories = ["카테고리1", "카테고리2","카테고리3"];// 임시 나중에 지울거임 
-  // const [categories, setCategories] = useState([]);
-
-//   useEffect(() => {
-//     // Axios를 사용하여 카테고리 데이터를 가져옵니다.
-//     const fetchCategories = async () => {
-//         try {
-//             let response = await axios.get('YOUR_API_ENDPOINT'); // 실제 API endpoint로 변경해주세요.
-//             setCategories(response.data.categories); // API 응답의 구조에 따라 변경해야 할 수 있습니다.
-//         } catch (error) {
-//             console.error("Failed fetching categories:", error);
-//         }
-//     };
-
-//     fetchCategories();
-// }, []);
+  const dummyCategories = ["카테고리1", "카테고리2","카테고리3","카테고리4","카테고리5"];// 임시 나중에 지울거임 
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -39,16 +25,22 @@ const ProductInputForm = ({
       product.stock_color.trim() === ''
     ) {
       alert('작성되지 않은 텍스트가 있습니다');
-    } else {
+      return; // early return
+    } 
+    
+     // 이미지의 수를 확인
+     if (imagePreviewUrl.length < 1) {
+      alert('1개 이상의 이미지를 불러와주세요.');
+      return; // early return
+    }
+
       const newProduct = {
         ...product,
       };
 
       handleSubmit(newProduct);
-    }
-  };
-
-
+    };
+  
   return (
     <InputForm onSubmit={handleFormSubmit}>
       <InputTitle>
@@ -63,18 +55,21 @@ const ProductInputForm = ({
 
       <InputTitle>
       <h2>카테고리</h2>
-                <select 
-                    name="category_name" 
-                    value={product.category_name} 
-                    onChange={handleChange}
-                >
-                    <option value="">-- 카테고리 선택 --</option>
-                    {dummyCategories.map((category, index) => (
-                        <option key={index} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                    </select>
+      <select 
+        name="category_name" 
+        value={product.category_name} 
+        onChange={handleChange}
+      >
+      <option value="">-- 카테고리 선택 --</option>
+      {dummyCategories.map((category, index) => {
+      console.log("Key (index):", index, "Value (category):", category); // 이 부분을 추가했습니다.
+      return (
+      <option key={index} value={category}>
+      {category}
+      </option>
+      );
+      })}
+      </select>
       </InputTitle>
 
       <InputTitle>
@@ -146,7 +141,7 @@ const InputTitle = styled.div`
   cursor: pointer;
   border-radius: 4px;
   padding: 10px;
-
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 
   h2{
     font-size: 14px;

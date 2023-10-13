@@ -3,30 +3,24 @@ import Image from '../ui/Image/Image';
 import plusIcon from '../../assets/images/plus_Icon.svg';
 import ImagePre from '../../assets/images/imagePreview.jpg';
 
-const ProductImageForm = ({ imagePreviewUrl, setImagePreviewUrl }) => {
+const ProductImageForm = ({ imagePreviewUrl, setImagePreviewUrl}) => {
     
-    const handleImageChange = (e) => {
+    const handleImageChange = (e, index=0) => {
         e.preventDefault();
 
-        const files = e.target.files;
-        const tempUrls = [];
+        const files = Array.from(e.target.files);
 
-        const loadFile = (file, index) => {
+        files.forEach((file) => {
             const reader = new FileReader();
-
-            reader.onloadend = (event) => {
-                tempUrls[index] = event.target.result;
-                if (tempUrls.length === files.length) {
-                    setImagePreviewUrl(tempUrls);
-                }
-            }
-
+    
+            reader.onloadend = () => {
+                const updatedPreviewUrls = [...imagePreviewUrl];
+                updatedPreviewUrls[index] = reader.result;
+    
+                setImagePreviewUrl(updatedPreviewUrls);
+            };
             reader.readAsDataURL(file);
-        }
-
-        for (let i = 0; i < files.length; i++) {
-            loadFile(files[i], i);
-        }
+        });
     };
 
     return (
@@ -39,12 +33,22 @@ const ProductImageForm = ({ imagePreviewUrl, setImagePreviewUrl }) => {
                     <HiddenInput type="file" multiple id="fileInput" onChange={handleImageChange} />
                 </LabelForFileInput>
             </ImagePreview>
-
+    
             {Array.from({ length: 6 }).map((_, index) => (
-                <SmallImagePreview key={index} style={{ backgroundImage: imagePreviewUrl[index + 1] ? `url(${imagePreviewUrl[index + 1]})` : undefined }} />
-            ))}
-        </ProductImage>
-    )
+            <SmallImagePreview 
+                key={index} 
+                style={{ backgroundImage: imagePreviewUrl[index + 1] ? `url(${imagePreviewUrl[index + 1]})` : `url(${ImagePre})` }}
+            >
+                <LabelForFileInput>
+                    <CircleButton>
+                        <Image imageSrc={plusIcon}/>
+                    </CircleButton>
+                    <HiddenInput type="file" multiple onChange={(e) => handleImageChange(e, index + 1)} />
+                </LabelForFileInput>
+            </SmallImagePreview>
+        ))}
+    </ProductImage>
+    );
 }
 
 export default ProductImageForm;

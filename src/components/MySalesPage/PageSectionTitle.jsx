@@ -14,7 +14,7 @@ export default PageSectionTitle
 
 const SectionTitle = styled.div`
   width: 100%;
-  padding-bottom: 5px;
+  padding: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid #8e8e8e;
   color: #8e8e8e;

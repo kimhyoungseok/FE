@@ -22,6 +22,12 @@ const MySalesPage = () => {
   const [product, setProduct] = useState(initialState);
   const [savedProducts, setSavedProducts] = useState([]);
   const [imagePreviewUrl, setImagePreviewUrl] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
+
+  //--------------------------------------------------------------------------
+
+  
+//----------------------------------------------------------------------------
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,16 +96,18 @@ const MySalesPage = () => {
         <PageContainer>
           {/* 타이틀 박스 아래 전체 div */}
           <ProductImageForm
-            imagePreviewUrl={imagePreviewUrl}
-            setImagePreviewUrl={setImagePreviewUrl}
+               imagePreviewUrl={imagePreviewUrl} 
+               setImagePreviewUrl={setImagePreviewUrl}
+               setImageFiles={setImageFiles}
           />
           <ProductInputForm
             product={product}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             handleCancel={handleCancel}
+            imagePreviewUrl={imagePreviewUrl}
           />
-          <SaveProductForm products={savedProducts} />
+          <SaveProductForm products={savedProducts} imageFiles={imageFiles} setSavedProducts={setSavedProducts} />
           {/* 여러 제품 데이터를 props로 전달 */}
         </PageContainer>
         {/* 타이틀 박스 아래 전체 div */}
