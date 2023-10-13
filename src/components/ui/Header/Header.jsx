@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { getCookie, removeCookie } from '../../../utils/cookie';
+import { removeCookie } from '../../../utils/cookie';
+import AuthContext from '../../../context/AuthContext';
 
 const Header = () => {
   const search = '../src/assets/images/search.png';
@@ -18,11 +19,23 @@ const Header = () => {
       headerRef.current.style = 'opacity:1';
     }
   };
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
-
     headerChange();
+
+    return () => window.removeEventListener('scroll', updateScroll);
   }, [scrollPosition]);
+
+  const auth = useContext(AuthContext);
+
+  const handleLogout = () => {
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+    setIsLoggedIn(false);
+  };
+
   return (
     <>
       <Head>
@@ -54,14 +67,8 @@ const Header = () => {
             <NavCategory>SALE</NavCategory>
           </Nav>
           <UserArea>
-            {getCookie('accessToken') ? (
-              <UserBtn
-                onClick={() => {
-                  removeCookie('accessToken');
-                  removeCookie('refreshToken');
-                  window.location.reload();
-                }}
-              >
+            {isLoggedIn ? (
+              <UserBtn onClick={handleLogout}>
                 <StyledLink to="/">LOGOUT</StyledLink>
               </UserBtn>
             ) : (
