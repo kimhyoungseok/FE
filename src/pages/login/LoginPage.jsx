@@ -6,7 +6,7 @@ import { getCookie, setCookie } from '../../utils/cookie';
 import { AuthContext } from '../../context/AuthContext';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -54,7 +54,6 @@ const LoginPage = () => {
     </ContainerWrapper>
   );
 };
-
 export default LoginPage;
 
 const ContainerWrapper = styled.div`
