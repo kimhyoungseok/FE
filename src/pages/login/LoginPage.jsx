@@ -1,30 +1,31 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
+import { login } from '../../apis/authApi/authApi';
+import { getCookie, setCookie } from '../../utils/cookie';
+import { AuthContext } from '../../context/AuthContext';
 
-const LoginForm = () => {
-  const navigate = useNavigate();
+const LoginPage = () => {
+    const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        'http://15.165.177.248:8080/member/login',
-        {
-          email,
-          password,
-        }
-      );
+      const response = await login({ email, password });
 
-      console.log(response);
+      setCookie('accessToken', response.data.accessToken);
+      setCookie('refreshToken', response.data.refreshToken);
 
-      response.data.accessToken && navigate('/', { replace: true });
+      setIsLoggedIn(true);
+
+      navigate('/');
     } catch (error) {
-      alert(error.response.data);
+      console.error(error.message);
     }
   };
 
@@ -53,15 +54,13 @@ const LoginForm = () => {
     </ContainerWrapper>
   );
 };
-
-export default LoginForm;
+export default LoginPage;
 
 const ContainerWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-
   .login-wrapper {
     width: 300px;
     margin: 0 auto;
@@ -70,30 +69,25 @@ const ContainerWrapper = styled.div`
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-
     > h2 {
       text-align: center;
       margin-bottom: 40px;
       font-weight: bold;
       font-size: 20px;
     }
-
     > form {
       display: flex;
       flex-direction: column;
-
       > label {
         font-size: 13px;
         margin-bottom: 10px;
       }
-
       > input {
         padding: 10px;
         margin-bottom: 15px;
         border: 1px solid #ccc;
         border-radius: 3px;
       }
-
       > button {
         background-color: black;
         color: #fff;
@@ -102,7 +96,6 @@ const ContainerWrapper = styled.div`
         border-radius: 3px;
         cursor: pointer;
         transition: background-color 0.3s;
-
         &:hover {
           background-color: #0056b3;
         }
