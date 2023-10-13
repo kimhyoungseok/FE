@@ -10,3 +10,7 @@ export const getCookie = (name) => {
     return acc;
   }, {})[name];
 };
+
+export const removeCookie = (name) => {
+  setCookie(name, '', 'Thu, 01 Jan 1970 00:00:00 UTC');
+};

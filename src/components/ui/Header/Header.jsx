@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { getCookie, removeCookie } from '../../../utils/cookie';
 
 const Header = () => {
-  const search = "../src/assets/images/search.png";
+  const search = '../src/assets/images/search.png';
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const headerRef = useRef(null);
@@ -12,13 +13,13 @@ const Header = () => {
   };
   const headerChange = () => {
     if (scrollPosition < 100) {
-      headerRef.current.style = "opacity:0";
+      headerRef.current.style = 'opacity:0';
     } else {
-      headerRef.current.style = "opacity:1";
+      headerRef.current.style = 'opacity:1';
     }
   };
   useEffect(() => {
-    window.addEventListener("scroll", updateScroll);
+    window.addEventListener('scroll', updateScroll);
 
     headerChange();
   }, [scrollPosition]);
@@ -53,10 +54,21 @@ const Header = () => {
             <NavCategory>SALE</NavCategory>
           </Nav>
           <UserArea>
-            <UserBtn>
-              <StyledLink to="/login">LOGIN</StyledLink>
-              {/* 로그인 되어 있다면 로그아웃 */}
-            </UserBtn>
+            {getCookie('accessToken') ? (
+              <UserBtn
+                onClick={() => {
+                  removeCookie('accessToken');
+                  removeCookie('refreshToken');
+                  window.location.reload();
+                }}
+              >
+                <StyledLink to="/">LOGOUT</StyledLink>
+              </UserBtn>
+            ) : (
+              <UserBtn>
+                <StyledLink to="/login">LOGIN</StyledLink>
+              </UserBtn>
+            )}
             <UserBtn>
               <StyledLink to="/signup">JOIN</StyledLink>
               {/* 로그인 되어 있다면 마이페이지 */}
