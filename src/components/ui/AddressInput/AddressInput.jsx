@@ -14,7 +14,6 @@ const AddressInput = ({
   handleDelieryInputChange,
   getAddress,
 }) => {
- 
   return (
     <label>
       배송지
@@ -29,7 +28,7 @@ const AddressInput = ({
               onChange={handleDelieryInputChange}
             />
             {name === 'recipient_zipcode' && (
-              <PostCodeButton getAdress={getAddress} />
+              <PostCodeButton getAdress={getAdress} />
             )}
           </div>
         ))}

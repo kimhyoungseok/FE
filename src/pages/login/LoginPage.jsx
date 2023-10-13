@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { login } from '../../apis/authApi/authApi';
 
-const LoginForm = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,7 +45,7 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginPage;
 
 const ContainerWrapper = styled.div`
   display: flex;

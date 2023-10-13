@@ -18,7 +18,6 @@ const createInstance = (contentType) => {
       return config;
     },
     (error) => {
-      // 요청 실패 시 처리할 로직을 여기에 작성합니다.
       return Promise.reject(error);
     }
   );
