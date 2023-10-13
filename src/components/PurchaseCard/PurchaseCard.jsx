@@ -11,30 +11,38 @@ import usePaymentForm from '../../hooks/usePaymentForm';
 import { useDispatch } from 'react-redux';
 import { initialState, setDeliveryInput, setPhoneInput } from '../../store/slices/deliveryFormSlice';
 import { initialState as paymentInit  , setCardNumberInput, setPaymentInput } from '../../store/slices/paymentFormSlice';
+import useGetCartProductList from '../../hooks/useGetCartProductList';
 
-const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
+const PurchaseCard = ({
+  cartData,
+  totalPrice,
+totalCount
+}) => {
   const pathName = useLocation().pathname;
 
   const { deliveryInput } = useDeliveryForm();
   const { paymentInput } = usePaymentForm();
   const isCartPage = pathName === '/cart';
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [orderData, setOrderData] = useState({});
-
+  const { handleSaveCart } = useGetCartProductList();
   const allValuesEmpty = (obj) => {
     return Object.values(obj).every((value) => value === '');
   };
-  const handlePurchaseClick = (event) => {
+  const handlePurchaseClick = async(event) => {
     const { name } = event.target;
 
-    if (name === 'purchase') return navigate('/order');
+    if (name === 'purchase') {
+      await handleSaveCart()
+      navigate('/order')
+    }
     if (name === 'payment') {
       if (!allValuesEmpty(deliveryInput) && !allValuesEmpty(paymentInput)) {
         setOrderData({ ...orderData, ...deliveryInput, ...paymentInput });
         dispatch(setDeliveryInput(initialState.deliveryInput));
-        dispatch(setPhoneInput(initialState.phoneInput))
-        dispatch(setCardNumberInput(paymentInit.cardNumberInput))
+        dispatch(setPhoneInput(initialState.phoneInput));
+        dispatch(setCardNumberInput(paymentInit.cardNumberInput));
         dispatch(setPaymentInput(paymentInit.paymentInput));
       } else {
         alert('배송지 및 결제를 입력해주세요');
@@ -42,21 +50,22 @@ const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
     }
   };
 
-
   useEffect(() => {
     if (!allValuesEmpty(orderData)) {
       navigate('/orderComplete');
     }
   }, [orderData]);
+
+
   console.log(orderData);
   return (
-    <PaymentCardWrap>
-      <Span text={isCartPage ? '결제정보' : '주문상품 1개'} />
+    <PaymentCardWrap margin={isCartPage ? 'marginTop' : ''}>
+      <Span text={isCartPage ? '결제정보' : `주문정보`} />
       {isCartPage ? (
-        <PaymentInfo labelText="상품수" value={`${totalCount}개`} />
+        <PaymentInfo labelText="상품수" value={cartData[0].cartProductCount} />
       ) : (
         <Ul>
-          {userCartData.map((cartDataItem) => (
+          {cartData.map((cartDataItem) => (
             <UnifiedCartCard
               key={cartDataItem.productId}
               cartDataItem={cartDataItem}
@@ -64,10 +73,10 @@ const PurchaseCard = ({ userCartData, totalPrice, totalCount }) => {
           ))}
         </Ul>
       )}
-      <PaymentInfo labelText="상품금액" value='10000원' />
+      <PaymentInfo labelText="상품금액" value={cartData[0].productPrice} />
       <PaymentInfo
         labelText="총 결제금액"
-        value={`${totalPrice}원`}
+        value={isCartPage ? `${totalPrice}원` : `${cartData[0].productPrice}원`}
         border="borderTop"
       />
       <PurchaseButtonWrap>
@@ -86,10 +95,11 @@ export default PurchaseCard;
 
 const PaymentCardWrap = styled(Wrap)`
   border: 1px solid #000;
+  margin-top: ${(props) => props.margin === 'marginTop' && '60px'};
   border-radius: 4px;
   padding: 20px;
   width: 40%;
-  height: 100%;
+  height: ${(props) => props.margin === 'marginTop' ? '80%': '100%'};
   font-size: 18px;
 `;
 
