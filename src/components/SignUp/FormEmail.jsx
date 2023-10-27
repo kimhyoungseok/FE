@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { checkEmail } from '../../apis/authApi/authApi';
+import Wrap from '../../components/ui/Wrap/Wrap';
 
 const FormEmail = ({ handleInputChange, formData }) => {
   const [emailConfirm, setEmailConfirm] = useState('');
@@ -72,8 +73,13 @@ const ContainerWrapper = styled.div`
       height: 38px;
 
       &:hover {
-        background-color: #0056b3;
+        background-color: #261734;
       }
     }
+  }
+  > p {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 12px;
   }
 `;
