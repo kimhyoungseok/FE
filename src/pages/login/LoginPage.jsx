@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { login } from '../../apis/authApi/authApi';
+import { getCookie, setCookie } from '../../utils/cookie';
+import { AuthContext } from '../../context/AuthContext';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       const response = await login({ email, password });
+
+      setCookie('accessToken', response.data.accessToken);
+      setCookie('refreshToken', response.data.refreshToken);
+
+      setIsLoggedIn(true);
+
       navigate('/');
     } catch (error) {
       console.error(error.message);
@@ -44,7 +54,6 @@ const LoginPage = () => {
     </ContainerWrapper>
   );
 };
-
 export default LoginPage;
 
 const ContainerWrapper = styled.div`
