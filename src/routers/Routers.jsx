@@ -11,11 +11,15 @@ import UserInfoPage from '../pages/my/sub/UserInfoPage';
 import SubPage from '../pages/home/SubPage';
 import PurchaseListPage from '../pages/my/sub/PurchaseListPage';
 import OrderPage from '../pages/order/OrderPage';
+<<<<<<< HEAD
 import SellerPage from '../pages/sales/SellerPage';
 import SellermodePage from '../pages/sales/seller/SellermodePage';
 import MySalesPage from '../pages/sales/seller/MySalesPage';
 import SalesProductInquiryPage from '../pages/sales/seller/SalesProductInquiry';
 import EditSalesItem from '../pages/sales/seller/EditSalesItem';
+=======
+import OrderCompletePage from '../pages/order/OrderCompletePage';
+>>>>>>> 7ae2eeb0ca5bd4c4ec15a2b3d360549f831923ed
 
 const Routers = createBrowserRouter([
   {
@@ -41,6 +45,10 @@ const Routers = createBrowserRouter([
       {
         path: 'signup',
         element: <SignUpPage />,
+      },
+      {
+        path: 'orderComplete',
+        element:<OrderCompletePage/>
       },
       {
         path: 'my',
@@ -92,8 +100,8 @@ const Routers = createBrowserRouter([
       },
       {
         path: 'order',
-        element: <OrderPage/>
-      }
+        element: <OrderPage />,
+      },
     ],
   },
 ]);
